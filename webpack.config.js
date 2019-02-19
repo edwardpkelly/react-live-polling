@@ -25,6 +25,17 @@ module.exports = {
             }
         ]
     },
+    devServer: {
+        contentBase: [
+            path.join(__dirname, '/public')
+        ],
+        proxy: {
+            '/css': {
+                target: 'http://localhost:3000'
+            }
+        },
+        watchContentBase: true
+    },
     plugins: [
         new HtmlWebPackPlugin({
             template: "./src/index.html",
