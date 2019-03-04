@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ReactContainer from './js/components/container/ReactContainer';
+import App from './js/components/container/App';
 
-const wrapper = document.getElementById("react-placeholder");
-wrapper ? ReactDOM.render(<ReactContainer />, wrapper) : false;
+const wrapper = document.getElementById("react-container");
+wrapper ? ReactDOM.render(<App />, wrapper) : false;
 

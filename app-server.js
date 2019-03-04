@@ -5,6 +5,7 @@ const socketio = require('socket.io')(server);
 const PORT = 3000;
 
 let connections = [];
+const title = 'Untitled Presentation';
 
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
@@ -19,6 +20,11 @@ socketio.on('connection', (socket) => {
         socket.disconnect();
         console.log(`Disconnected. ${connections.length} connections remaining.`);
     });
+
+    socket.emit('welcome', {
+        title: title
+    });
+
     connections.push(socket);
     console.log(`Connected! ${connections.length} connections.`);
 });

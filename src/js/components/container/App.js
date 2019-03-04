@@ -3,12 +3,13 @@ import socketio from 'socket.io-client';
 
 import Header from '../parts/Header';
 
-class ReactContainer extends Component {
+class App extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            status: 'disconnected'
+            status: 'disconnected',
+            title: ''
         };
     }
 
@@ -16,10 +17,10 @@ class ReactContainer extends Component {
         this.socket = socketio.connect('http://localhost:3000');
         this.socket.on('connect', this.connect);
         this.socket.on('disconnect', this.disconnect);
+        this.socket.on('welcome', this.welcome);
     }
 
     connect = () => {
-        alert(`Connected: ${this.socket.id}`);
         this.setState({
             status: 'connected'
         });
@@ -31,13 +32,19 @@ class ReactContainer extends Component {
         });
     }
 
+    welcome = (serverState) => {
+        this.setState({
+            title: serverState.title
+        })
+    }
+
     render() { 
         return ( 
             <div>
-                <Header title="New Header" status={this.state.status} />
+                <Header title={this.state.title} status={this.state.status} />
             </div>
          );
     }
 }
  
-export default ReactContainer;
+export default App;
