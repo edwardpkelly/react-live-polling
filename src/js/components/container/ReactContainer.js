@@ -1,32 +1,41 @@
 import React, { Component } from 'react';
 import socketio from 'socket.io-client';
 
+import Header from '../parts/Header';
+
 class ReactContainer extends Component {
     constructor(props) {
         super(props);
-        this.state = { };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.connect = this.connect.bind(this);
+        this.state = {
+            status: 'disconnected'
+        };
     }
 
     componentWillMount() {
         this.socket = socketio.connect('http://localhost:3000');
         this.socket.on('connect', this.connect);
+        this.socket.on('disconnect', this.disconnect);
     }
 
-    connect() {
+    connect = () => {
         alert(`Connected: ${this.socket.id}`);
+        this.setState({
+            status: 'connected'
+        });
     }
 
-    handleChange(event) {
-        this.setState({ [event.target.id]: event.target.value });
+    disconnect = () => {
+        this.setState({
+            status: 'disconnected'
+        });
     }
 
     render() { 
         return ( 
-            <h2>Base React Component!!</h2>
-
+            <div>
+                <Header title="New Header" status={this.state.status} />
+            </div>
          );
     }
 }
