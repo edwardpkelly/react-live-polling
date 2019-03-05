@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import socketio from 'socket.io-client';
 
-import Header from '../parts/Header';
-import Audience from '../container/Audience';
-import Speaker from '../container/Speaker';
-import Board from '../container/Board';
+import Header from './components/parts/Header';
+import Audience from './components/container/Audience';
+import Speaker from './components/container/Speaker';
+import Board from './components/container/Board';
 
 class App extends Component {
     constructor(props) {
