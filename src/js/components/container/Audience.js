@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
 class Audience extends Component {
-    state = {  }
+    state = {  };
     render() { 
+        console.log(this.props);
         return ( 
         <h1>
-            Audience
+            Audience: {this.props.title}
         </h1> );
     }
 }

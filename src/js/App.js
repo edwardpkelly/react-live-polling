@@ -6,6 +6,7 @@ import Header from './components/parts/Header';
 import Audience from './components/container/Audience';
 import Speaker from './components/container/Speaker';
 import Board from './components/container/Board';
+import Error404 from './components/Error404';
 
 class App extends Component {
     constructor(props) {
@@ -47,9 +48,10 @@ class App extends Component {
             <div>
                 <Header title={this.state.title} status={this.state.status} />
                 <Switch>
-                    <Route path="/" exact component={Audience} />
-                    <Route path="/speaker" component={Speaker} />
-                    <Route path="/board" component={Board} />
+                    <Route path="/" exact render={props => <Audience {...props} {...this.state} /> } />
+                    <Route path="/speaker" render={props => <Speaker {...props} {...this.state} /> } />
+                    <Route path="/board" render={props => <Board {...props} {...this.state} /> } />
+                    <Route component={Error404} />
                 </Switch>
             </div>
          );

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 class Board extends Component {
-    state = {  }
+    state = {  };
+    
     render() { 
         return ( 
             <h1>Board</h1>
