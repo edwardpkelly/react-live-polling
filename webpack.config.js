@@ -1,10 +1,11 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+//const HtmlWebPackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
     output: {
         filename: "bundle.js",
-        path: path.resolve(__dirname, 'public')
+        path: path.resolve(__dirname, 'public'),
+        publicPath: '/'
     },
     module: {
         rules: [
@@ -34,12 +35,14 @@ module.exports = {
                 target: 'http://localhost:3000'
             }
         },
-        watchContentBase: true
-    },
-    plugins: [
-        new HtmlWebPackPlugin({
-            template: "./src/index.html",
-            filename: "./index.html"
-        })
-    ]
+        watchContentBase: true,
+        historyApiFallback: true
+    }
+    // ,
+    // plugins: [
+    //     new HtmlWebPackPlugin({
+    //         template: "./src/index.html",
+    //         filename: "./index.html"
+    //     })
+    // ]
 };
