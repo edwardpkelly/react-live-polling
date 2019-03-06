@@ -14,7 +14,9 @@ class App extends Component {
 
         this.state = {
             status: 'disconnected',
-            title: ''
+            title: '',
+            member: {},
+            audience: []
         };
     }
 
@@ -23,6 +25,12 @@ class App extends Component {
         this.socket.on('connect', this.connect);
         this.socket.on('disconnect', this.disconnect);
         this.socket.on('welcome', this.welcome);
+        this.socket.on('joined', this.joined);
+        this.socket.on('audience', this.updateAudience);
+    }
+
+    emit = (eventType, data) => {
+        this.socket.emit(eventType, data);
     }
 
     connect = () => {
@@ -43,12 +51,24 @@ class App extends Component {
         })
     }
 
+    joined = (data) => {
+        this.setState({
+            member: data
+        })
+    }
+
+    updateAudience = (newAudience) => {
+        this.setState({
+            audience: newAudience
+        })
+    }
+
     render() { 
         return ( 
             <div>
                 <Header title={this.state.title} status={this.state.status} />
                 <Switch>
-                    <Route path="/" exact render={props => <Audience {...props} {...this.state} /> } />
+                    <Route path="/" exact render={props => <Audience {...props} {...this.state} emit={this.emit} /> } />
                     <Route path="/speaker" render={props => <Speaker {...props} {...this.state} /> } />
                     <Route path="/board" render={props => <Board {...props} {...this.state} /> } />
                     <Route component={Error404} />

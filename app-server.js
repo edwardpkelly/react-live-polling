@@ -5,6 +5,7 @@ const socketio = require("socket.io")(server);
 const PORT = 3000;
 
 let connections = [];
+let audience = [];
 const title = "Untitled Presentation";
 
 app.use(express.static("./public"));
@@ -19,6 +20,16 @@ socketio.on("connection", socket => {
     connections.splice(connections.indexOf(socket), 1);
     socket.disconnect();
     console.log(`Disconnected. ${connections.length} connections remaining.`);
+  });
+
+  socket.on('join', (data) => {
+    const newMember = {
+      id: socket.id,
+      name: data.name
+    };
+    socket.emit('joined', newMember);
+    audience.push(newMember);
+    socketio.sockets.emit('audience', audience);
   });
 
   socket.emit("welcome", {
