@@ -19,6 +19,11 @@ socketio.on("connection", socket => {
   socket.once("disconnect", () => {
     connections.splice(connections.indexOf(socket), 1);
     socket.disconnect();
+
+    audience = audience.filter(item => {
+      return item.id !== socket.id;
+    });
+    socketio.sockets.emit('audience', audience);
     console.log(`Disconnected. ${connections.length} connections remaining.`);
   });
 

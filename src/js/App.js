@@ -34,6 +34,9 @@ class App extends Component {
     }
 
     connect = () => {
+        const member = (sessionStorage.member) ? JSON.parse(sessionStorage.member) : null;
+        if (member) this.emit('join', member);
+        
         this.setState({
             status: 'connected'
         });
@@ -48,19 +51,20 @@ class App extends Component {
     welcome = (serverState) => {
         this.setState({
             title: serverState.title
-        })
+        });
     }
 
     joined = (data) => {
+        sessionStorage.member = JSON.stringify(data);
         this.setState({
             member: data
-        })
+        });
     }
 
     updateAudience = (newAudience) => {
         this.setState({
             audience: newAudience
-        })
+        });
     }
 
     render() { 
