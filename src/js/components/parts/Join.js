@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Join = (props) => {
     return ( 
@@ -7,10 +8,12 @@ const Join = (props) => {
             <input 
                 className="form-control"
                 placeholder="Enter your full name..."
-                onChange={(event) => props.handleUpdateName(event.target.value)}
+                onChange={(event) => props.handleUpdateMember(event.target.value)}
                 required />
             <button className="btn btn-primary">Join</button>
+            <Link to="/speaker">Join as Speaker</Link>
         </form>
+
      );
 }
  

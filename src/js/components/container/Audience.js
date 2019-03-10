@@ -3,21 +3,42 @@ import Display from '../parts/Display';
 import Join from '../parts/Join';
 
 class Audience extends Component {
-    state = { 
-        formValue: ''
-     };
+    state = {
+        formDataMember: '',
+        formDataSpeaker: '',
+        formDataTitle: ''
+    };
 
-    handleUpdateName = (value) => {
+    handleUpdateMember = value => {
         this.setState({
-            formValue: value
+            formDataMember: value
         });
-    }
+    };
 
     handleJoin = () => {
-        this.props.emit('join', { name: this.state.formValue });
-    }
+        this.props.emit('join', { name: this.state.formDataMember });
+    };
 
-    render() { 
+    handleUpdateTitle = value => {
+        this.setState({
+            formDataTitle: value
+        });
+    };
+
+    handleUpdateSpeaker = value => {
+        this.setState({
+            formDataSpeaker: value
+        });
+    };
+
+    handleStart = () => {
+        this.props.emit('start', {
+            name: this.state.formDataSpeaker,
+            title: this.state.formDataTitle
+        });
+    };
+
+    render() {
         console.log(this.props);
         return (
             <div>
@@ -30,13 +51,15 @@ class Audience extends Component {
 
                     <Display show={!this.props.member.name}>
                         <h1>Join the session.</h1>
-                        <Join handleUpdateName={this.handleUpdateName} handleJoin={this.handleJoin} />
+                        <Join
+                            handleUpdateMember={this.handleUpdateMember}
+                            handleJoin={this.handleJoin}
+                        />
                     </Display>
-                    
                 </Display>
             </div>
         );
     }
 }
- 
+
 export default Audience;
