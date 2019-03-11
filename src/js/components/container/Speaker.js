@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Display from '../parts/Display';
 import JoinSpeaker from '../parts//JoinSpeaker';
+import Attendance from '../parts/Attendance';
 
 class Speaker extends Component {
     state = {
@@ -29,8 +30,6 @@ class Speaker extends Component {
     };
 
     render() {
-        console.log('props');
-        console.log(this.props);
         return (
             <div>
                 <Display show={this.props.status === 'connected'}>
@@ -41,7 +40,7 @@ class Speaker extends Component {
                         }
                     >
                         <p>Questions</p>
-                        <p>Attendance</p>
+                        <Attendance audience={this.props.audience} />
                     </Display>
 
                     <Display show={!this.props.member.name}>
