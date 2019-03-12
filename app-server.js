@@ -82,6 +82,7 @@ socketio.on('connection', socket => {
 
     socket.on('answer', data => {
         results[data.choice]++;
+        socketio.sockets.emit('results', results);
         console.log(`Answer: ${data.choice} | ${results}`);
         console.log(results);
     });
@@ -91,7 +92,8 @@ socketio.on('connection', socket => {
         audience,
         speaker: speaker.name,
         questions,
-        currentQuestion
+        currentQuestion,
+        results
     });
 
     connections.push(socket);

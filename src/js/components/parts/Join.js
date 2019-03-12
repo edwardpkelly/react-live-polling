@@ -18,6 +18,7 @@ const Join = (props) => {
                 required />
             <button className="btn btn-primary">Join</button>
             <Link to="/speaker">Join as Speaker</Link>
+            <Link to="/board">Got to the Board</Link>
         </form>
 
      );

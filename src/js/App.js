@@ -19,7 +19,8 @@ class App extends Component {
             audience: [],
             speaker: '',
             questions: [],
-            currentQuestion: {}
+            currentQuestion: {},
+            results: {}
         };
     }
 
@@ -33,6 +34,7 @@ class App extends Component {
         this.socket.on('start', this.start);
         this.socket.on('end', this.updateState);
         this.socket.on('ask', this.onAskQuestion);
+        this.socket.on('results', this.updateResults);
     }
 
     emit = (eventType, data) => {
@@ -97,6 +99,12 @@ class App extends Component {
         sessionStorage.answer = '';
         this.setState({
             currentQuestion: question
+        });
+    };
+
+    updateResults = data => {
+        this.setState({
+            results: data
         });
     };
 
