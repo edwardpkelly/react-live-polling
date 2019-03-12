@@ -1,10 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const Attendance = (props) => {
-    return ( 
+const Attendance = props => {
+    const { audience } = props;
+
+    return (
         <div>
-            <h2>Attendance: {props.audience.length} members</h2>
-            <table className="table table-striped">
+            <h2>Attendance: {audience.length} members</h2>
+            <table className='table table-striped'>
                 <thead>
                     <tr>
                         <th>Audience Member</th>
@@ -12,7 +15,7 @@ const Attendance = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.audience.map((item, index) => {
+                    {audience.map((item, index) => {
                         return (
                             <tr key={index}>
                                 <td>{item.name}</td>
@@ -23,7 +26,11 @@ const Attendance = (props) => {
                 </tbody>
             </table>
         </div>
-     );
-}
- 
+    );
+};
+
+Attendance.propTypes = {
+    audience: PropTypes.arrayOf(PropTypes.object).isRequired
+};
+
 export default Attendance;

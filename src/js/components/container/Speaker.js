@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Display from '../parts/Display';
 import JoinSpeaker from '../parts//JoinSpeaker';
 import Attendance from '../parts/Attendance';
+import Questions from '../parts/Questions';
 
 class Speaker extends Component {
     state = {
@@ -23,27 +25,41 @@ class Speaker extends Component {
     };
 
     handleStart = () => {
-        this.props.emit('start', {
+        const { emit } = this.props;
+
+        emit('start', {
             name: this.state.formDataSpeaker,
             title: this.state.formDataTitle
         });
     };
 
     render() {
+        const {
+            audience,
+            emit,
+            status,
+            member,
+            questions
+        } = this.props;
+        const {
+            name,
+            type
+        } = member;
+
         return (
             <div>
-                <Display show={this.props.status === 'connected'}>
+                <Display show={status === 'connected'}>
                     <Display
                         show={
-                            this.props.member.name &&
-                            this.props.member.type === 'speaker'
+                            name &&
+                            type === 'speaker'
                         }
                     >
-                        <p>Questions</p>
-                        <Attendance audience={this.props.audience} />
+                        <Questions questions={questions} emit={emit} />
+                        <Attendance audience={audience} />
                     </Display>
 
-                    <Display show={!this.props.member.name}>
+                    <Display show={!name}>
                         <h2>Start the presentation...</h2>
                         <JoinSpeaker
                             handleUpdateSpeaker={this.handleUpdateSpeaker}
@@ -56,5 +72,13 @@ class Speaker extends Component {
         );
     }
 }
+
+Speaker.propTypes = {
+    audience: PropTypes.arrayOf(PropTypes.object).isRequired,
+    emit: PropTypes.func.isRequired,
+    status: PropTypes.string.isRequired,
+    member: PropTypes.object.isRequired,
+    questions: PropTypes.arrayOf(PropTypes.object).isRequired
+};
 
 export default Speaker;

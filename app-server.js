@@ -2,12 +2,15 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const socketio = require('socket.io')(server);
+const questions = require('./src/data/questions-data');
 const PORT = 3000;
 
 let connections = [];
 let audience = [];
 let speaker = {};
 let presentationTitle = 'Untitled Presentation';
+let currentQuestion = {};
+let results = {};
 
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
@@ -45,7 +48,7 @@ socketio.on('connection', socket => {
         const newMember = {
             id: socket.id,
             name: data.name,
-            type: 'member'
+            type: 'audience'
         };
         socket.emit('joined', newMember);
         audience.push(newMember);
@@ -65,10 +68,30 @@ socketio.on('connection', socket => {
         socketio.sockets.emit('start', { title, speaker: name });
     });
 
+    socket.on('ask', question => {
+        currentQuestion = question;
+        socketio.sockets.emit('ask', currentQuestion);
+        results = {};
+        for (let choice of Object.keys(question)) {
+            if (choice !== 'q') {
+                results[choice] = 0;
+            }
+        }
+        console.log(`Question Asked: ${question.q}`);
+    });
+
+    socket.on('answer', data => {
+        results[data.choice]++;
+        console.log(`Answer: ${data.choice} | ${results}`);
+        console.log(results);
+    });
+
     socket.emit('welcome', {
         title: presentationTitle,
         audience,
-        speaker: speaker.name
+        speaker: speaker.name,
+        questions,
+        currentQuestion
     });
 
     connections.push(socket);

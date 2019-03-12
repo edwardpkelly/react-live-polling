@@ -2,17 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Header = props => {
-    console.log('header');
-    console.log(props);
-    
+    const {
+        title,
+        speaker,
+        status
+    } = props;
+
     return (
         <header className='row'>
             <div className='col-xs-10'>
-                <h1>{props.title}</h1>
-                <p>{props.speaker}</p>
+                <h1>{title}</h1>
+                <p>{speaker}</p>
             </div>
             <div className='col-xs-2'>
-                <span id='connection-status' className={props.status} />
+                <span id='connection-status' className={status} />
             </div>
         </header>
     );
@@ -23,7 +26,9 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-    title: PropTypes.string.isRequired
+    title: PropTypes.string.isRequired,
+    status: PropTypes.string,
+    speaker: PropTypes.string
 };
 
 export default Header;

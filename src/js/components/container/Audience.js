@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import Display from '../parts/Display';
 import Join from '../parts/Join';
+import Ask from '../parts/Ask';
 
 class Audience extends Component {
     state = {
@@ -16,7 +19,8 @@ class Audience extends Component {
     };
 
     handleJoin = () => {
-        this.props.emit('join', { name: this.state.formDataMember });
+        const { emit } = this.props;
+        emit('join', { name: this.state.formDataMember });
     };
 
     handleUpdateTitle = value => {
@@ -32,24 +36,34 @@ class Audience extends Component {
     };
 
     handleStart = () => {
-        this.props.emit('start', {
+        const { emit } = this.props;
+        emit('start', {
             name: this.state.formDataSpeaker,
             title: this.state.formDataTitle
         });
     };
 
     render() {
-        console.log(this.props);
+        const { audience, emit, currentQuestion, member, status } = this.props;
+        const { name } = member;
+        const hasQuestion = currentQuestion.hasOwnProperty('q');
+
         return (
             <div>
-                <Display show={this.props.status === 'connected'}>
-                    <Display show={this.props.member.name}>
-                        <h2>Welcome {this.props.member.name}</h2>
-                        <p>{this.props.audience.length} members connected.</p>
-                        <p>Questions will appear here.</p>
+                <Display show={status === 'connected'}>
+                    <Display show={name}>
+                        <Display show={!hasQuestion}>
+                            <h2>Welcome {name}</h2>
+                            <p>{audience.length} members connected.</p>
+                            <p>Questions will appear here.</p>
+                        </Display>
+
+                        <Display show={hasQuestion}>
+                            <Ask question={currentQuestion} emit={emit} />
+                        </Display>
                     </Display>
 
-                    <Display show={!this.props.member.name}>
+                    <Display show={!name}>
                         <h1>Join the session.</h1>
                         <Join
                             handleUpdateMember={this.handleUpdateMember}
@@ -61,5 +75,13 @@ class Audience extends Component {
         );
     }
 }
+
+Audience.propTypes = {
+    audience: PropTypes.arrayOf(PropTypes.object).isRequired,
+    currentQuestion: PropTypes.object.isRequired,
+    emit: PropTypes.func.isRequired,
+    member: PropTypes.object.isRequired,
+    status: PropTypes.string.isRequired
+};
 
 export default Audience;

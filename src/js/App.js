@@ -17,7 +17,9 @@ class App extends Component {
             title: '',
             member: {},
             audience: [],
-            speaker: ''
+            speaker: '',
+            questions: [],
+            currentQuestion: {}
         };
     }
 
@@ -30,6 +32,7 @@ class App extends Component {
         this.socket.on('audience', this.updateAudience);
         this.socket.on('start', this.start);
         this.socket.on('end', this.updateState);
+        this.socket.on('ask', this.onAskQuestion);
     }
 
     emit = (eventType, data) => {
@@ -40,6 +43,7 @@ class App extends Component {
         const member = sessionStorage.member
             ? JSON.parse(sessionStorage.member)
             : null;
+
         if (member) {
             const { type, name } = member;
             if (type === 'audience') {
@@ -87,6 +91,13 @@ class App extends Component {
             sessionStorage.title = title;
         }
         this.setState({ ...presentation });
+    };
+
+    onAskQuestion = question => {
+        sessionStorage.answer = '';
+        this.setState({
+            currentQuestion: question
+        });
     };
 
     render() {
