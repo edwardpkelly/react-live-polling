@@ -84,7 +84,6 @@ socketio.on('connection', socket => {
         results[data.choice]++;
         socketio.sockets.emit('results', results);
         console.log(`Answer: ${data.choice} | ${results}`);
-        console.log(results);
     });
 
     socket.emit('welcome', {
