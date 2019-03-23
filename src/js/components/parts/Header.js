@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import AppConstants from '../../../js/constants/app-constants';
+
 const Header = props => {
     const {
         title,
@@ -22,7 +24,7 @@ const Header = props => {
 };
 
 Header.defaultProps = {
-    status: 'disconnected'
+    status: AppConstants.DISCONNECTED
 };
 
 Header.propTypes = {

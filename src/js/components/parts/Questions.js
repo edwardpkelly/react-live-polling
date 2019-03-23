@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import SpeakerEvents from '../../../js/constants/speaker-events';
+
 const Questions = props => {
     const { questions, emit } = props;
 
@@ -10,7 +12,7 @@ const Questions = props => {
             {questions.map((question, index) => {
                 return (
                     <div key={index} className='col-xs-12 col-sm-6 col-md-3'>
-                        <span onClick={() => emit('ask', question)}>
+                        <span onClick={() => emit(SpeakerEvents.ASK_QUESTION_EVENT, question)}>
                             {question.q}
                         </span>
                     </div>

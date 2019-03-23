@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import AppEvents from '../../../js/constants/app-events';
+import AppConstants from '../../../js/constants/app-constants';
+import UserConstants from '../../../js/constants/user-constants';
+
 import Display from '../parts/Display';
 import JoinSpeaker from '../parts//JoinSpeaker';
 import Attendance from '../parts/Attendance';
@@ -27,7 +31,7 @@ class Speaker extends Component {
     handleStart = () => {
         const { emit } = this.props;
 
-        emit('start', {
+        emit(AppEvents.START_PRESENTATION_EVENT, {
             name: this.state.formDataSpeaker,
             title: this.state.formDataTitle
         });
@@ -48,11 +52,11 @@ class Speaker extends Component {
 
         return (
             <div>
-                <Display show={status === 'connected'}>
+                <Display show={status === AppConstants.CONNECTED}>
                     <Display
                         show={
                             name &&
-                            type === 'speaker'
+                            type === UserConstants.SPEAKER
                         }
                     >
                         <Questions questions={questions} emit={emit} />

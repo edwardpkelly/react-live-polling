@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import UserEvents from '../../../js/constants/user-events';
+
 import Display from './Display';
 
 class Ask extends Component {
@@ -35,7 +37,7 @@ class Ask extends Component {
             answer: choice
         });
         sessionStorage.answer = choice;
-        emit('answer', {
+        emit(UserEvents.ANSWER_QUESTION_EVENT, {
             question,
             choice
         });

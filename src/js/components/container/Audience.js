@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import AppEvents from '../../../js/constants/app-events';
+import AppConstants from '../../../js/constants/app-constants';
+
 import Display from '../parts/Display';
 import Join from '../parts/Join';
 import Ask from '../parts/Ask';
@@ -20,7 +23,7 @@ class Audience extends Component {
 
     handleJoin = () => {
         const { emit } = this.props;
-        emit('join', { name: this.state.formDataMember });
+        emit(AppEvents.JOIN_NEW_MEMBER_EVENT, { name: this.state.formDataMember });
     };
 
     handleUpdateTitle = value => {
@@ -37,7 +40,7 @@ class Audience extends Component {
 
     handleStart = () => {
         const { emit } = this.props;
-        emit('start', {
+        emit(AppEvents.START_PRESENTATION_EVENT, {
             name: this.state.formDataSpeaker,
             title: this.state.formDataTitle
         });
@@ -50,7 +53,7 @@ class Audience extends Component {
 
         return (
             <div>
-                <Display show={status === 'connected'}>
+                <Display show={status === AppConstants.CONNECTED}>
                     <Display show={name}>
                         <Display show={!hasQuestion}>
                             <h2>Welcome {name}</h2>

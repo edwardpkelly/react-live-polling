@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import ReactChartkick, { ColumnChart } from 'react-chartkick';
 import Chart from 'chart.js';
 
+import AppConstants from '../../../js/constants/app-constants';
+
 import Display from '../parts/Display';
 
 class Board extends Component {
@@ -23,7 +25,7 @@ class Board extends Component {
 
         return (
             <div id='scorebaord'>
-                <Display show={status === 'connected' && q}>
+                <Display show={status === AppConstants.CONNECTED && q}>
                     <Display show={!isEmpty}>
                         <h3>{q}</h3>
                         <ColumnChart xtitle="Options" ytitle="Total" data={this.barGraphData(results)} />
@@ -33,7 +35,7 @@ class Board extends Component {
                     </Display>
                 </Display>
 
-                <Display show={status === 'connected' && !q}>
+                <Display show={status === AppConstants.CONNECTED && !q}>
                     <h3>Awaiting the next question...</h3>
                 </Display>
             </div>
